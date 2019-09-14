@@ -1,120 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Realtime Editor</title>
     <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            overflow: hidden;
-        }
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
 
-        #editor {
-            height: 100%;
-            width: 50%;
-            display: inline-block;
-        }
+      #editor {
+        height: 100%;
+        width: 50%;
+        display: inline-block;
+      }
 
-        #container {
-            height: 100%;
-            width: auto;
-            white-space: nowrap;
-            overflow: hidden;
-            position: relative;
-        }
+      #container {
+        height: 100%;
+        width: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        position: relative;
+      }
 
-        #iframe {
-            height: 100%;
-            display: inline-block;
-            width: 50%;
-        }
+      #iframe {
+        height: 100%;
+        display: inline-block;
+        width: 50%;
+      }
 
-        /* disable tag matching */
-        .ace_editor .ace_marker-layer .ace_bracket {
-            display: none
-        }
+      /* disable tag matching */
+      .ace_editor .ace_marker-layer .ace_bracket {
+        display: none;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div id='container'>
-        <div id="editor"></div>
-        <iframe id='iframe' frameBorder="0"></iframe>
+  <body>
+    <div id="container">
+      <div id="editor"></div>
+      <iframe id="iframe" frameBorder="0"></iframe>
     </div>
     <!-- load emmet code and snippets compiled for browser -->
     <script src="https://cloud9ide.github.io/emmet-core/emmet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ace.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-language_tools.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-emmet.js">  </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-emmet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.6/ext-elastic_tabstops_lite.js"></script>
     <script>
-        function update() {
-            var idoc = document.getElementById('iframe').contentWindow.document;
-            idoc.open();
-            idoc.write(editor.getValue());
-            idoc.close();
-        }
+      function update() {
+        var idoc = document.getElementById("iframe").contentWindow.document;
+        idoc.open();
+        idoc.write(editor.getValue());
+        idoc.close();
+      }
 
-        function setupEditor() {
-            var baseHtmlTemplate = ``;
-            baseHtmlTemplate = `<!DOCTYPE html>`;
-            baseHtmlTemplate += `\n<html lang="en">`;
-            baseHtmlTemplate += `\n<head>`;
-            baseHtmlTemplate += `\n    <meta charset="UTF-8">`;
-            baseHtmlTemplate += `\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">`;
-            baseHtmlTemplate += `\n    <meta http-equiv="X-UA-Compatible" content="ie=edge">`;
-            baseHtmlTemplate += `\n    <title>Realtime Editor</title>`;
-            baseHtmlTemplate += `\n</head>`;
-            baseHtmlTemplate += `\n<body>`;
-            baseHtmlTemplate += `\n    `;
-            baseHtmlTemplate += `\n</body>`;
-            baseHtmlTemplate += `\n</html>`;
+      function setupEditor() {
+        var baseHtmlTemplate = ``;
+        baseHtmlTemplate = `<!DOCTYPE html>`;
+        baseHtmlTemplate += `\n<html lang="en">`;
+        baseHtmlTemplate += `\n<head>`;
+        baseHtmlTemplate += `\n    <meta charset="UTF-8">`;
+        baseHtmlTemplate += `\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">`;
+        baseHtmlTemplate += `\n    <meta http-equiv="X-UA-Compatible" content="ie=edge">`;
+        baseHtmlTemplate += `\n    <title>Realtime Editor</title>`;
+        baseHtmlTemplate += `\n</head>`;
+        baseHtmlTemplate += `\n<body>`;
+        baseHtmlTemplate += `\n    `;
+        baseHtmlTemplate += `\n</body>`;
+        baseHtmlTemplate += `\n</html>`;
 
-            window.editor = ace.edit("editor");
-            editor.setValue(baseHtmlTemplate, 1); //1 = moves cursor to end
-            editor.getSession().on('change', function () {
-                update();
-            });
-            editor.focus();
-            editor.setOptions({
-                // editor options
-                cursorStyle: 'ace',
-                highlightSelectedWord: true,
-                highlightActiveLine: true,
-                behavioursEnabled: true,
-                wrapBehavioursEnabled: true,
-                // renderer options
-                showGutter: true,
-                fontSize: "10pt",
-                showLineNumbers: true,
-                vScrollBarAlwaysVisible: true,
-                showPrintMargin: true,
-                printMarginColumn: 80,
-                theme: 'ace/theme/monokai',
-                mode: 'ace/mode/html',
-                // session options
-                wrap: 80,
-                // editor options defined by extensions
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-                enableSnippets: true,
-                enableEmmet: true,
-                useElasticTabstops: true,
-            });
+        window.editor = ace.edit("editor");
+        editor.setValue(baseHtmlTemplate, 1); //1 = moves cursor to end
+        editor.getSession().on("change", function() {
+          update();
+        });
+        editor.focus();
+        editor.setOptions({
+          // editor options
+          cursorStyle: "ace",
+          highlightSelectedWord: true,
+          highlightActiveLine: true,
+          behavioursEnabled: true,
+          wrapBehavioursEnabled: true,
+          // renderer options
+          showGutter: true,
+          fontSize: "10pt",
+          showLineNumbers: true,
+          vScrollBarAlwaysVisible: true,
+          showPrintMargin: true,
+          printMarginColumn: 80,
+          theme: "ace/theme/monokai",
+          mode: "ace/mode/html",
+          // session options
+          wrap: 80,
+          // editor options defined by extensions
+          enableBasicAutocompletion: true,
+          enableLiveAutocompletion: true,
+          enableSnippets: true,
+          enableEmmet: true,
+          useElasticTabstops: true
+        });
+      }
 
-        }
+      setupEditor();
 
-        setupEditor();
-
-        update();
+      update();
     </script>
-</body>
-
+  </body>
 </html>
